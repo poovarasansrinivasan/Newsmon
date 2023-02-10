@@ -10,24 +10,26 @@ import hashlib
 import uuid
 from datetime import datetime
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["newsmon"]
-mycol = mydb["channelnewsasia"]
 
 driver = webdriver.Chrome (executable_path="C:\chromedriver.exe")
-driver.get("https://www.channelnewsasia.com/international")
-sleep(1)
+driver.get("https://vietnam.vnanet.vn/english/making-news-p-43-1.html")
+# driver.get("https://vietnam.vnanet.vn/english/")
+sleep(2)
+# driver.find_element(By.XPATH,'//*[@id="bavn-hd"]/section[2]/div/nav/div[1]/ul/li[3]/a').click()
+# sleep(2)
+
+myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["newsmon"]
+mycol = mydb["vietnam"]
 
 def sample():
-    data=driver.find_element(By.XPATH,'//*[@id="main-nav"]/ul/li[2]/a')
-    data.click()
-    sleep(2)
     try:
         soup = BeautifulSoup(driver.page_source, 'html.parser')
-        fin=soup.findAll('div',class_='media-object')
+        fin=soup.findAll('div',class_='uk-grid-margin uk-first-column')
         print(len(fin))
         for post in fin:
-            url = 'https://www.channelnewsasia.com'+ post.find('a')['href']  
+            url =post.find('a')['href'] 
+            print(url) 
             url = url.strip()
             hashofurl = hashlib.md5(url.encode()).hexdigest()
             result = mycol.find_one({"hashlink":hashofurl})
@@ -56,11 +58,18 @@ def sample():
                     finaldict['text'] = text
                     finaldict['hashlink'] = hashofurl
                     print(finaldict)
-                    mycol.insert_one(finaldict)
+                    x=list(mycol.find({"url":url}))
+                    if len(x)< 1:
+                        mycol.insert_one(finaldict)
+                    else:
+                        break    
+                    print (finaldict)
                 except Exception as e:
                     pass
             else:
-                continue
+                continue   
     except Exception as e:
-        print(e)        
-sample()
+        print(e)    
+sample()        
+
+
