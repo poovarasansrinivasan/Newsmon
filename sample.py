@@ -1,5 +1,5 @@
 import trafilatura
-downloaded = trafilatura.fetch_url('https://www.businesstimes.com.sg/companies-markets/ocbc-unit-files-police-report-against-gudang-garam-owner')
+downloaded = trafilatura.fetch_url('https://www.businesstimes.com.sg/companies-markets/meyer-park-sold-uol-singapore-land-group-jv-s39218-million-third-en-bloc-attempt')
 data=trafilatura.extract(downloaded)
 print(data)
 
@@ -13,13 +13,13 @@ print(data)
 # mydb = myclient["newsmon"]
 # mycol = mydb["indonesianews"]
 # # file = open("/home/sensai/projects/serp_alibongo/result/final_/new_data/new_urls_data.json")
-# file=['https://www.businesstimes.com.sg/companies-markets/ocbc-unit-files-police-report-against-gudang-garam-owner']
+# file=['https://www.indonesianews.net/news/273516117/india-tops-singapore-indonesia-in-fintech-study']
 # # with open('/home/blackpanther/poovarasan/Newsmon/kualal.txt') as f:
 # #     contents = f.readlines()
 # #     print(contents)
 # for url in file:
 #     url = url.strip()
-#     # print(url)
+#     print(url)
 #     hashofurl = hashlib.md5(url.encode()).hexdigest()
 #     result = mycol.find_one({"hashlink":hashofurl})
 #     if result == None:
